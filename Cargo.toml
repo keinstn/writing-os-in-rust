@@ -6,4 +6,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+bootloader = "0.9.23"
 
+
+[package.metadata.bootimage]
+build-command = [
+    "build",
+    "-Z", "build-std=core,compiler_builtins",
+    "-Z", "build-std-features=compiler-builtins-mem",
+    "--target", "x86_64-my_os.json"
+]
