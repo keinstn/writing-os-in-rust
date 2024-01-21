@@ -1,7 +1,7 @@
 PROJECT = my_os
 ARCH = x86_64
 
-.PHONY: build build-bootimage run-qemu
+.PHONY: build bootimage run-qemu
 
 build:
 	cargo build \
@@ -9,7 +9,7 @@ build:
 		-Z build-std-features=compiler-builtins-mem  \
 		--target ${ARCH}-${PROJECT}.json
 
-build-bootimage:
+bootimage:
 	cargo bootimage
 
 run-qemu:
