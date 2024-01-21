@@ -40,12 +40,12 @@ struct ScreenChar {
     color_code: ColorCode,
 }
 
-const BUTTER_HIGHT: usize = 25;
-const BUTTER_WIDTH: usize = 80;
+const BUFFER_HIGHT: usize = 25;
+const BUFFER_WIDTH: usize = 80;
 
 #[repr(transparent)]
 struct Buffer {
-    chars: [[Volatile<ScreenChar>; BUTTER_WIDTH]; BUTTER_HIGHT],
+    chars: [[Volatile<ScreenChar>; BUFFER_WIDTH]; BUFFER_HIGHT],
 }
 
 pub struct Writer {
@@ -59,11 +59,11 @@ impl Writer {
         match byte {
             b'\n' => self.new_line(),
             byte => {
-                if self.column_position >= BUTTER_WIDTH {
+                if self.column_position >= BUFFER_WIDTH {
                     self.new_line();
                 }
 
-                let row = BUTTER_HIGHT - 1;
+                let row = BUFFER_HIGHT - 1;
                 let col = self.column_position;
 
                 let color_code = self.color_code;
@@ -86,14 +86,14 @@ impl Writer {
     }
 
     fn new_line(&mut self) {
-        for row in 1..BUTTER_HIGHT {
-            for col in 0..BUTTER_WIDTH {
+        for row in 1..BUFFER_HIGHT {
+            for col in 0..BUFFER_WIDTH {
                 let character = self.buffer.chars[row][col].read();
                 self.buffer.chars[row - 1][col].write(character);
             }
         }
 
-        self.clear_row(BUTTER_HIGHT - 1);
+        self.clear_row(BUFFER_HIGHT - 1);
         self.column_position = 0;
     }
 
@@ -103,7 +103,7 @@ impl Writer {
             color_code: self.color_code,
         };
 
-        for col in 0..BUTTER_WIDTH {
+        for col in 0..BUFFER_WIDTH {
             self.buffer.chars[row][col].write(blank);
         }
     }
