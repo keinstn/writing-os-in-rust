@@ -86,7 +86,26 @@ impl Writer {
     }
 
     fn new_line(&mut self) {
-        /* TODO */
+        for row in 1..BUTTER_HIGHT {
+            for col in 0..BUTTER_WIDTH {
+                let character = self.buffer.chars[row][col].read();
+                self.buffer.chars[row - 1][col].write(character);
+            }
+        }
+
+        self.clear_row(BUTTER_HIGHT - 1);
+        self.column_position = 0;
+    }
+
+    fn clear_row(&mut self, row: usize) {
+        let blank = ScreenChar {
+            ancii_character: b' ',
+            color_code: self.color_code,
+        };
+
+        for col in 0..BUTTER_WIDTH {
+            self.buffer.chars[row][col].write(blank);
+        }
     }
 }
 
