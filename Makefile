@@ -1,7 +1,7 @@
 PROJECT = my_os
 ARCH = x86_64
 
-.PHONY: build bootimage run-qemu
+.PHONY: build bootimage run
 
 build:
 	cargo build \
@@ -12,6 +12,6 @@ build:
 bootimage:
 	cargo bootimage
 
-run-qemu:
+run:
 	qemu-system-x86_64 \
 		-drive format=raw,file=target/${ARCH}-${PROJECT}/debug/bootimage-${PROJECT}.bin
