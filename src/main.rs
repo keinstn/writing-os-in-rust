@@ -11,20 +11,20 @@ pub extern "C" fn _start() -> ! {
 
     my_os::init();
 
-    fn stack_overflow() {
-        stack_overflow();
-    }
+    // fn stack_overflow() {
+    //     stack_overflow();
+    // }
 
-    stack_overflow();
+    // stack_overflow();
 
-    unsafe {
-        *(0xdeadbeef as *mut u8) = 42;
-    }
+    // unsafe {
+    //     *(0xdeadbeef as *mut u8) = 42;
+    // }
 
-    x86_64::instructions::interrupts::int3();
+    // x86_64::instructions::interrupts::int3();
 
     println!("It did not crash!");
-    loop {}
+    my_os::hlt_loop();
 }
 
 #[panic_handler]
