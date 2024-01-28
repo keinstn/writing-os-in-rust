@@ -1,5 +1,5 @@
 use x86_64::structures::paging::OffsetPageTable;
-use x86_64::{structures::paging::PageTable, PhysAddr, VirtAddr};
+use x86_64::{structures::paging::PageTable, VirtAddr};
 
 pub unsafe fn init(physical_memory_offset: VirtAddr) -> OffsetPageTable<'static> {
     let level_4_table = active_level_4_table(physical_memory_offset);
